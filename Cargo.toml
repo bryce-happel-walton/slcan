@@ -12,7 +12,7 @@ repository = "https://github.com/jmaygarden/slcan.git"
 version = "0.1.4"
 
 [dependencies]
-embedded-can = "0.3"
+embedded-can = "0.4.1"
 nb = "1.0"
 serial-core = "0.4"
 

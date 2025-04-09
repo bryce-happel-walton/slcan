@@ -1,4 +1,4 @@
-use embedded_can::Can;
+use embedded_can::nb::Can;
 
 fn main() {
     let arg = std::env::args().nth(1);
@@ -19,10 +19,10 @@ fn main() {
     can.open(slcan::BitRate::Setup1Mbit).unwrap();
 
     loop {
-        match can.try_receive() {
+        match can.receive() {
             Ok(frame) => println!("{}", frame),
             Err(nb::Error::WouldBlock) => (),
-            Err(nb::Error::Other(error)) => match error.kind() {
+            Err(nb::Error::Other(error)) => match error.inner().kind() {
                 std::io::ErrorKind::TimedOut => (),
                 _ => eprintln!("{:?}", error),
             },
