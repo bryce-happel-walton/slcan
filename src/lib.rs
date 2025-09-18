@@ -2,12 +2,12 @@ extern crate serial_core as serial;
 
 pub use embedded_can::{ExtendedId, Id, StandardId};
 use serial::prelude::*;
+#[cfg(target_family = "unix")]
+use std::os::unix::prelude::AsRawFd;
 use std::{
     convert::{TryFrom, TryInto},
     io,
 };
-#[cfg(target_family = "unix")]
-use std::os::unix::prelude::AsRawFd;
 
 pub mod embedded_can_impl;
 
@@ -73,6 +73,7 @@ pub struct CanFrame {
     pub data: [u8; 8],
 }
 
+#[derive(Debug)]
 pub struct CanSocket<P: SerialPort> {
     port: P,
     rbuff: [u8; SLCAN_MTU],
